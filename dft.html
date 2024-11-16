@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database to Excel</title>
+    <link rel="stylesheet" href="tht.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script> 
+</head>
+<body>
+<link src="PHPExcel.php">
+    <table id="dataTable">
+        <tr>
+            <th>التاريخ</th>
+            <th>رقم الدين</th>
+            <th>اسم الزبون</th>
+            <th>ايدي</th>
+        </tr>
+        <tr>
+            <td><input id="date" type="date"></td>
+            <td><input id="number" type="number" placeholder="رقم الدين"></td>
+            <td><input id="txt" type="text" placeholder="اسم الزبون"></td>
+            <td>1</td>
+        </tr>
+    </table>
+
+    <button onclick="saveToExcel()">حفظ إلى Excel</button>
+
+    <script>
+        function saveToExcel() {
+            // استدعاء عناصر الإدخال
+            const date = document.getElementById("date").value;
+            const number = document.getElementById("number").value;
+            const customerName = document.getElementById("txt").value;
+
+            // جمع البيانات في تنسيق كائن
+            const data = [
+                { "التاريخ": date, "رقم الدين": number, "اسم الزبون": customerName, "ايدي": 1 }
+            ];
+
+            // إنشاء ورقة Excel من البيانات
+            const worksheet = XLSX.utils.json_to_sheet(data);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+            // حفظ الملف
+            XLSX.writeFile(workbook, "database.xlsx");
+        }
+    </script>
+
+</body>
+</html>

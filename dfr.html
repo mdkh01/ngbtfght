@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>nuts abrash</title>
+    <link rel="stylesheet" href="tht.css">
+</head>
+<body>
+
+<div>
+    <form action="save_to_excel.php" method="post">
+        <table>
+            <thead>
+                <tr>
+                    <th>ملاحظة</th>
+                    <th>القيمة الاجمالية</th>
+                    <th>السعر</th>
+                    <th>العدد</th>
+                    <th>نوع البضاعة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input name="note[]" type="text" required></td>
+                    <td><input name="totalValue[]" type="number" readonly></td>
+                    <td><input name="price[]" type="number" placeholder="السعر" oninput="calculateTotal(this)"></td>
+                    <td><input name="quantity[]" type="number" placeholder="kg" oninput="calculateTotal(this)"></td>
+                    <td><input name="itemName[]" type="text" placeholder="اسم البضاعة"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- حقل المرتج -->
+        <label for="returnValue">المرتج</label>
+        <input name="returnValue" type="number" placeholder="أدخل قيمة المرتج">
+        
+        <button type="submit">حفظ إلى Excel</button>
+    </form>
+</div>
+
+<script>
+    function calculateTotal(element) {
+        const row = element.closest('tr');
+        const price = parseFloat(row.querySelector('input[name="price[]"]').value) || 0;
+        const quantity = parseFloat(row.querySelector('input[name="quantity[]"]').value) || 0;
+        const totalValue = row.querySelector('input[name="totalValue[]"]');
+        
+        // حساب القيمة الإجمالية
+        totalValue.value = price * quantity;
+    }
+</script>
+
+</body>
+</html>
